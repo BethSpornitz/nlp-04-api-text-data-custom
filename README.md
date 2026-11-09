@@ -1,86 +1,72 @@
-# nlp-04-api-text-data
+# nlp-04-api-text-data-custom
 
 [![Python 3.14](https://img.shields.io/badge/python-3.14%2B-blue?logo=python)](pyproject.toml)
-[![CI](https://github.com/denisecase/nlp-04-api-text-data/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/denisecase/nlp-04-api-text-data/actions/workflows/ci-python-zensical.yml)
-[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://denisecase.github.io/nlp-04-api-text-data/)
+[![CI](https://github.com/BethSpornitz/nlp-04-api-text-data-custom/actions/workflows/ci-python-zensical.yml/badge.svg)](https://github.com/BethSpornitz/nlp-04-api-text-data-custom/actions/workflows/ci-python-zensical.yml)
+[![Documentation](https://img.shields.io/badge/docs-site-blue?logo=github)](https://BethSpornitz.github.io/nlp-04-api-text-data-custom/)
 
 [![uv managed](https://img.shields.io/badge/uv-managed-DE5FE9)](https://docs.astral.sh/uv/)
 [![ty type checked](https://img.shields.io/badge/ty-type_checked-2F80ED)](https://docs.astral.sh/ty/)
 [![Zensical docs](https://img.shields.io/badge/Zensical-docs-purple)](https://zensical.org/)
 [![MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-> Acquire, validate, and transform JSON data from web APIs using Python.
+> Retrieve and validate JSON comments from an API, prepare the data for analysis, and explore word frequencies using Python.
 
 ## Project Overview
 
-Author: Denise Case
+Author: Beth Spornitz
 
-Date: 2026 October
+Date: 2026 November
 
 Fourth project in the Web Mining and Applied NLP course.
 
-This project introduces structured data acquisition
-using web APIs.
+This project demonstrates how to retrieve, validate, and transform
+JSON data from a web API into an analysis-ready dataset.
 
-The goal is to retrieve JSON data,
-validate its structure,
-transform it into an analysis-ready dataset,
-and persist the results.
+The custom application uses comments from JSONPlaceholder to
+explore frequently occurring words in comment text.
 
-The project demonstrates an Extract, Validate,
-Transform, Load (EVTL) pipeline.
-
-The project is configured in
-[pyproject.toml](pyproject.toml).
+The project follows an Extract, Validate, Transform, Load (EVTL)
+pipeline and is configured in [pyproject.toml](pyproject.toml).
 
 ## Data
 
-The example retrieves JSON records from
-[JSONPlaceholder](https://jsonplaceholder.typicode.com/posts),
-a public demonstration API.
+The custom application uses the
+[JSONPlaceholder Comments API](https://jsonplaceholder.typicode.com/comments),
+a public API containing simulated comment records.
 
-Each record includes fields such as:
+Each record includes:
 
-- User identifier.
 - Post identifier.
-- Title.
-- Body text.
+- Comment identifier.
+- Name.
+- Email address.
+- Comment body text.
 
-The pipeline preserves the raw JSON data
-and produces a structured CSV dataset.
+The pipeline is designed to preserve the raw JSON response
+and produce a structured CSV dataset.
 
 ## Approach
 
-The project uses a modular Python pipeline
-to acquire, validate, transform, and save API data.
+The project uses four EVTL stages:
 
-The pipeline has four stages:
+- **Extract:** Retrieve JSON comments from the API.
+- **Validate:** Check the structure, required fields, and data types.
+- **Transform:** Select useful fields and calculate text features.
+- **Load:** Save the processed records to a CSV file.
 
-- **Extract** - retrieve JSON data from an API.
-- **Validate** - verify the JSON structure and record types.
-- **Transform** - select fields and calculate derived text features.
-- **Load** - save the processed data to a CSV file.
+The analysis will examine frequently occurring words in the
+comment text after removing common stop words.
 
-The example uses Requests for HTTP acquisition
-and Polars for tabular data processing.
+The project uses Requests for API retrieval and Polars for
+tabular data processing.
 
-Explore these important project components:
+Important project components:
 
-- [pyproject.toml](pyproject.toml) - project identity, dependencies, and tool configuration.
-- [src/nlp/pipeline_api_json.py](src/nlp/pipeline_api_json.py) - main EVTL pipeline orchestrator.
-- [src/nlp/config.py](src/nlp/config.py) - example API and path configuration.
-- [src/nlp/stage01_extract.py](src/nlp/stage01_extract.py) - retrieve API data.
-- [src/nlp/stage02_validate.py](src/nlp/stage02_validate.py) - validate JSON data.
-- [src/nlp/stage03_transform.py](src/nlp/stage03_transform.py) - transform records into a DataFrame.
-- [src/nlp/stage04_load.py](src/nlp/stage04_load.py) - save processed results.
-- [tests/](tests/) - automated tests.
-- [.github/workflows/](.github/workflows/) - automated testing and documentation deployment.
-- [docs/](docs/) - project documentation.
-- [zensical.toml](zensical.toml) - documentation configuration.
-
-The goal is to understand how data moves
-through a reproducible pipeline
-with explicit stages and intermediate results.
+- [pyproject.toml](pyproject.toml) - Project configuration and dependencies.
+- [src/nlp/](src/nlp/) - Original and custom Python pipeline files.
+- [tests/](tests/) - Automated tests.
+- [docs/](docs/) - Project documentation.
+- [zensical.toml](zensical.toml) - Documentation configuration.
 
 ## Run the Project
 
@@ -95,29 +81,20 @@ uv run python -m nlp.pipeline_api_json
 
 ## Results
 
-The pipeline retrieves JSON records,
-checks their structure,
-and transforms the records into a tabular dataset.
+The original example pipeline retrieves JSON posts,
+validates their structure, and transforms them into a CSV dataset.
 
-The Transform stage calculates derived fields,
-including title and body text lengths.
+The custom application will use JSONPlaceholder comments
+to calculate text features and examine word frequencies.
 
-Successful execution produces:
+Planned custom outputs include:
 
-```shell
-========================
-Pipeline executed successfully!
-========================
-```
+- Raw JSON comments saved in `data/raw/`.
+- Processed comment records saved in `data/processed/`.
+- A visualization of the most frequently occurring meaningful words.
 
-The following files are created:
-
-- `project.log` - pipeline execution log.
-- `data/raw/case_raw.json` - original API response.
-- `data/processed/case_processed.csv` - transformed dataset.
-
-These artifacts provide evidence of successful
-data acquisition, validation, transformation, and persistence.
+Results and interpretations will be added after the custom
+pipeline has been executed and verified.
 
 ## Verification
 
@@ -129,12 +106,12 @@ uv run python -m pytest
 
 ## Project Documentation
 
-The [hosted documentation site](https://denisecase.github.io/nlp-04-api-text-data/)
-is published using Zensical and GitHub Pages.
+The [hosted documentation site](https://BethSpornitz.github.io/nlp-04-api-text-data-custom/)
+will be published using Zensical and GitHub Pages.
 
-The documentation site is used to present the project report,
-covering such sections as data, methods, results, visualizations,
-interpretation, and conclusions.
+The documentation will describe the API source, validation,
+transformation methods, word-frequency results, visualization,
+interpretation, and limitations.
 
 ## CI/CD and GitHub Actions
 
@@ -143,8 +120,8 @@ to check project files and publish the docs.
 
 GitHub Actions include:
 
-- [CI: Python and Documentation Checks](https://github.com/denisecase/nlp-04-api-text-data/actions/workflows/ci-python-zensical.yml)
-- [CD: Documentation Deployment](https://github.com/denisecase/nlp-04-api-text-data/actions/workflows/deploy-zensical.yml)
+- [CI: Python and Documentation Checks](https://github.com/BethSpornitz/nlp-04-api-text-data-custom/actions/workflows/ci-python-zensical.yml)
+- [CD: Documentation Deployment](https://github.com/BethSpornitz/nlp-04-api-text-data-custom/actions/workflows/deploy-zensical.yml)
 
 ## Developer Reference
 
@@ -229,7 +206,8 @@ testing, documentation, and code quality.
 
 ## Links
 
-- [Hosted Documentation](https://denisecase.github.io/nlp-04-api-text-data/)
+- [GitHub Repository](https://github.com/BethSpornitz/nlp-04-api-text-data-custom)
+- [Hosted Documentation](https://BethSpornitz.github.io/nlp-04-api-text-data-custom/)
 - [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
 - [Citation](CITATION.cff)
 - [License](LICENSE)
