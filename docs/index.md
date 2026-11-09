@@ -109,19 +109,11 @@ Automated tests provide additional verification of the pipeline's expected behav
 
 ## Interpretation
 
-Web APIs provide structured access to data, but successful acquisition does not guarantee that the data is meaningful for every analytical purpose.
+The code successfully retrieved and processed 500 comments from the JSONPlaceholder API.  The comments averaged 21 words with lengths ranging from 11-31 words.
 
-The custom pipeline successfully adapts from the posts endpoint to the comments endpoint by updating its configuration, validation rules, and transformation logic.
+The word frequency correctly identified the most common words, but since the text is simulated Latin text rather than conversations the frequent words don't tell us much.
 
-The word-count analysis shows that the 500 synthetic comments contain between 11 and 31 space-delimited words, with an average of 21.03 words per comment.
-
-The token-frequency analysis demonstrates text preprocessing and frequency counting. However, JSONPlaceholder comments contain synthetic, Latin-like placeholder text rather than authentic conversations.
-
-Consequently, frequently occurring tokens such as `aut`, `est`, and `qui` should not be interpreted as meaningful English-language topics or evidence of real user behavior.
-
-The word-count calculation uses space-delimited words, while the token-frequency analysis uses alphabetic matching and a limited English stopword list. These methods do not perform advanced linguistic analysis.
-
-The EVTL architecture separates responsibilities, making the pipeline easier to inspect, test, maintain, and adapt to other structured data sources.
+The project successfully showed how to adapt an existing pipeline to a different API, validate the data and calculate text features.  It also enforces that you must understand the source data before decided that you can draw any conclusions from it.
 
 ## Documentation Index
 

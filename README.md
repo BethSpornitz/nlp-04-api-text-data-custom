@@ -149,11 +149,11 @@ The raw and processed datasets are available in:
 
 ### Interpretation and Limitations
 
-JSONPlaceholder provides synthetic comments containing Latin-like placeholder text. The records are useful for demonstrating API retrieval, JSON validation, data transformation, and text feature extraction, but they do not represent authentic conversations.
+The code successfully retrieved and processed 500 comments from the JSONPlaceholder API.  The comments averaged 21 words with lengths ranging from 11-31 words.
 
-The comment-length analysis describes the structure of the sample text. The token-frequency analysis demonstrates preprocessing and counting techniques, but its results should not be interpreted as meaningful English-language topics or real user behavior.
+The word frequency correctly identified the most common words, but since the text is simulated Latin text rather than conversations the frequent words don't tell us much.
 
-The word-count feature uses space-delimited tokens rather than full linguistic tokenization. The frequency analysis uses a limited stopword list and does not perform lemmatization or contextual language analysis.
+The project successfully showed how to adapt an existing pipeline to a different API, validate the data and calculate text features.  It also enforces that you must understand the source data before decided that you can draw any conclusions from it.
 
 The raw and processed datasets are available in:
 
