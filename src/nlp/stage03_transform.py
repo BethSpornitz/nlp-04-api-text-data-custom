@@ -67,13 +67,19 @@ def run_transform(
     df: pl.DataFrame = pl.DataFrame(records)
 
     # Derived fields
+    # Beth Spornitz | 2026-11
+    # Add a word count for each post's body text.
     df = df.with_columns(
         [
             pl.col("title").str.len_chars().alias("title_length"),
             pl.col("body").str.len_chars().alias("body_length"),
+            pl.col("body")
+            .str.split(" ")
+            .list.eval(pl.element().filter(pl.element() != ""))
+            .list.len()
+            .alias("body_word_count"),
         ]
     )
-
     LOG.info("Transformation complete.")
     LOG.info(f"DataFrame preview:\n{df.head()}")
     LOG.info("Sink: Polars DataFrame created")
