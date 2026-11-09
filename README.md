@@ -9,7 +9,9 @@
 [![Zensical docs](https://img.shields.io/badge/Zensical-docs-purple)](https://zensical.org/)
 [![MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-> Retrieve and validate JSON comments from an API, prepare the data for analysis, and explore word frequencies using Python.
+
+> Retrieve and validate JSON comments from an API, transform the data into an analysis-ready dataset, and explore comment lengths and token frequencies using Python.
+
 
 ## Project Overview
 
@@ -20,7 +22,7 @@ Date: 2026 November
 Fourth project in the Web Mining and Applied NLP course.
 
 This project demonstrates how to retrieve, validate, and transform
-JSON data from a web API into an analysis-ready dataset.
+JSON data from a web API into an analysis ready dataset.
 
 The custom application uses comments from JSONPlaceholder to
 explore frequently occurring words in comment text.
@@ -54,11 +56,13 @@ The project uses four EVTL stages:
 - **Transform:** Select useful fields and calculate text features.
 - **Load:** Save the processed records to a CSV file.
 
-The analysis will examine frequently occurring words in the
-comment text after removing common stop words.
 
-The project uses Requests for API retrieval and Polars for
-tabular data processing.
+The custom transformation calculates two derived text features: character length and space-delimited word count for each comment body.
+
+An additional analysis tokenizes the comment text, converts words to lowercase, removes punctuation, filters selected stopwords, and identifies the 15 most frequent remaining tokens.
+
+Requests retrieves the API data, Polars processes the structured records, and Matplotlib creates the visualizations.
+
 
 Important project components:
 
@@ -68,33 +72,94 @@ Important project components:
 - [docs/](docs/) - Project documentation.
 - [zensical.toml](zensical.toml) - Documentation configuration.
 
+
 ## Run the Project
 
-Follow the [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/)
-to set up your machine and project environment.
+Follow the [Professional Python Workflow Guide](https://denisecase.github.io/pro-analytics-02/) to set up the development environment.
 
-From a VS Code terminal in the project root:
+From a VS Code terminal in the project root, synchronize the environment:
 
-```shell
+```powershell
+uv sync
+```
+
+Run the original example pipeline:
+
+```powershell
 uv run python -m nlp.pipeline_api_json
 ```
 
+Run the custom JSONPlaceholder comments pipeline:
+
+```powershell
+uv run python -m nlp.pipeline_api_json_beth
+```
+
+Generate the comment-length and token-frequency visualizations:
+
+```powershell
+uv run python -m nlp.visualize_comments_beth
+```
+
+The custom pipeline saves its raw and processed data separately from the original example.
+
+
+
 ## Results
 
-The original example pipeline retrieves JSON posts,
-validates their structure, and transforms them into a CSV dataset.
+The custom EVTL pipeline successfully retrieves, validates, transforms, and saves 500 JSONPlaceholder comment records.
 
-The custom application will use JSONPlaceholder comments
-to calculate text features and examine word frequencies.
+The processed dataset contains seven columns:
 
-Planned custom outputs include:
+- `post_id`
+- `comment_id`
+- `name`
+- `email`
+- `body`
+- `body_length`
+- `body_word_count`
 
-- Raw JSON comments saved in `data/raw/`.
-- Processed comment records saved in `data/processed/`.
-- A visualization of the most frequently occurring meaningful words.
+### Comment Length Analysis
 
-Results and interpretations will be added after the custom
-pipeline has been executed and verified.
+The comments contain an average of 21.03 space-delimited words.
+
+- Minimum: 11 words
+- Maximum: 31 words
+- Records analyzed: 500
+
+![Distribution of Comment Word Counts](docs/images/comment_word_counts.png)
+
+### Token Frequency Analysis
+
+An additional text analysis identifies the 15 most frequent tokens after lowercasing, punctuation removal, and filtering selected stopwords.
+
+The three most frequent remaining tokens are:
+
+- `aut`: 307 occurrences
+- `est`: 266 occurrences
+- `qui`: 259 occurrences
+
+![Top 15 Tokens in Synthetic Comments](docs/images/comment_top_words.png)
+
+The raw and processed datasets are available in:
+
+- [Raw comments JSON](data/raw/beth_comments_raw.json)
+- [Processed comments CSV](data/processed/beth_comments_processed.csv)
+
+
+### Interpretation and Limitations
+
+JSONPlaceholder provides synthetic comments containing Latin-like placeholder text. The records are useful for demonstrating API retrieval, JSON validation, data transformation, and text feature extraction, but they do not represent authentic conversations.
+
+The comment-length analysis describes the structure of the sample text. The token-frequency analysis demonstrates preprocessing and counting techniques, but its results should not be interpreted as meaningful English-language topics or real user behavior.
+
+The word-count feature uses space-delimited tokens rather than full linguistic tokenization. The frequency analysis uses a limited stopword list and does not perform lemmatization or contextual language analysis.
+
+The raw and processed datasets are available in:
+
+- `data/raw/beth_comments_raw.json`
+- `data/processed/beth_comments_processed.csv`
+
 
 ## Verification
 
@@ -104,14 +169,13 @@ Run the automated tests:
 uv run python -m pytest
 ```
 
+
 ## Project Documentation
 
-The [hosted documentation site](https://BethSpornitz.github.io/nlp-04-api-text-data-custom/)
-will be published using Zensical and GitHub Pages.
+The [hosted documentation site](https://BethSpornitz.github.io/nlp-04-api-text-data-custom/) uses Zensical and GitHub Pages.
 
-The documentation will describe the API source, validation,
-transformation methods, word-frequency results, visualization,
-interpretation, and limitations.
+The documentation describes the API source, JSON structure, validation requirements, transformation methods, derived text features, visualizations, results, interpretation, and limitations.
+
 
 ## CI/CD and GitHub Actions
 

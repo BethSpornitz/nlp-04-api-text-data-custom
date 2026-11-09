@@ -1,5 +1,8 @@
 """stage03_transform.py.
 
+Modified by: Beth Spornitz
+Date: 2026-11
+
 (EDIT YOUR VERSION OF THIS FILE)
 
 Source: validated JSON object
